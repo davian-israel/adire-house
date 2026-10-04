@@ -17,7 +17,10 @@ fn var(k: &str) -> Result<String> {
 impl Config {
     pub fn from_env() -> Result<Self> {
         let c = Config {
-            bind: std::env::var("BIND").unwrap_or_else(|_| "0.0.0.0:3000".into()),
+            // BIND wins; otherwise honour the platform's PORT (Railway, Render, Heroku-style hosts).
+            bind: std::env::var("BIND").unwrap_or_else(|_| {
+                format!("0.0.0.0:{}", std::env::var("PORT").unwrap_or_else(|_| "3000".into()))
+            }),
             pb_url: std::env::var("PB_URL").unwrap_or_else(|_| "http://127.0.0.1:8090".into()),
             pb_email: var("PB_SUPERUSER_EMAIL")?,
             pb_password: var("PB_SUPERUSER_PASSWORD")?,

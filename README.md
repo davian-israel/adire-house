@@ -29,6 +29,8 @@ cargo run
 
 Or with Docker: `cp .env.example .env`, fill it in, then `docker compose up --build`.
 
+To deploy to Railway, see [DEPLOY.md](DEPLOY.md).
+
 With `ADIRE_SEED_DEMO=true`, the first start loads 7 fictional vendors and 17 artworks, plus:
 
 | Login | Where |

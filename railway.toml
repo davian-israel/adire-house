@@ -1,0 +1,11 @@
+# Railway: deploy from GitHub using the single-container image.
+# Add a volume mounted at /data in the service settings (see DEPLOY.md).
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile.single"
+
+[deploy]
+healthcheckPath = "/healthz"
+healthcheckTimeout = 120
+restartPolicyType = "ON_FAILURE"
+numReplicas = 1
