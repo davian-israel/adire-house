@@ -1,0 +1,10 @@
+<article class="vcard">
+  <div class="strip">{% for t in vc.thumbs %}{% if let Some(img) = t.img %}<img src="{{ img }}" alt="">{% else %}<div class="ph {{ t.ph }}" style="--h:{{ t.hue }}"></div>{% endif %}{% endfor %}</div>
+  <div class="body">
+    <div class="row"><span class="badge {% if vc.is_shop %}gold{% endif %}">{{ vc.kind_label }}</span><span class="badge ok">✓ Verified</span></div>
+    <h3>{{ vc.name }}</h3>
+    <div class="row">{{ vc.place }} · {{ vc.works }} works{% if vc.is_shop %} · {{ vc.artists }} artists{% endif %}</div>
+    <p>{{ vc.bio }}</p>
+    <div class="actions"><a class="btn small primary" href="/?vendor={{ vc.id }}">View works</a>{% let fav = vc.fav %}{% include "storefront/_fav.html" %}</div>
+  </div>
+</article>

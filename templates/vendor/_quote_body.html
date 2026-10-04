@@ -1,0 +1,5 @@
+<table>
+  <thead><tr><th>Buyer in</th><th class="num">Artwork</th><th class="num">Shipping</th><th class="num">Total</th></tr></thead>
+  <tbody>{% for p in q.prices %}<tr><th>{{ p.region }}<small>{{ p.lane }}</small></th><td>{{ p.artwork }}</td><td>{{ p.shipping }}</td><td><b>{{ p.total }}</b></td></tr>{% endfor %}</tbody>
+</table>
+<p>You receive {{ q.you_get }}. Adire House margin: {{ q.margin }}.</p>

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+{% include "storefront/_tabs.html" %}
+<div class="browse">
+  <form id="filters" class="rail" action="/" method="get"
+        hx-get="/artworks" hx-target="#results" hx-push-url="true"
+        hx-trigger="change, input from:#f-q delay:350ms, submit">
+    <div><label class="h" for="f-q">Search</label><input id="f-q" name="q" type="search" placeholder="Artist, title, city…" value="{{ f.q }}"></div>
+    <div><label class="h" for="f-medium">Medium</label><select id="f-medium" name="medium">{% for o in f.media %}<option value="{{ o.value }}" {% if o.selected %}selected{% endif %}>{{ o.label }}</option>{% endfor %}</select></div>
+    <div><label class="h" for="f-country">Country</label><select id="f-country" name="country">{% for o in f.countries %}<option value="{{ o.value }}" {% if o.selected %}selected{% endif %}>{{ o.label }}</option>{% endfor %}</select></div>
+    <div><label class="h" for="f-vendor">Shop or studio</label><select id="f-vendor" name="vendor">{% for o in f.vendors %}<option value="{{ o.value }}" {% if o.selected %}selected{% endif %}>{{ o.label }}</option>{% endfor %}</select></div>
+    <div><label class="h" for="f-artist">Artist</label><select id="f-artist" name="artist">{% for o in f.artists %}<option value="{{ o.value }}" {% if o.selected %}selected{% endif %}>{{ o.label }}</option>{% endfor %}</select></div>
+    <div><label class="h" for="f-max">Max total ({{ f.currency }})</label><select id="f-max" name="max">{% for o in f.maxes %}<option value="{{ o.value }}" {% if o.selected %}selected{% endif %}>{{ o.label }}</option>{% endfor %}</select></div>
+    <label class="check" for="f-fast"><input id="f-fast" name="fast" value="1" type="checkbox" {% if f.fast %}checked{% endif %}> In stock near {{ f.region_label }}</label>
+    <div><label class="h" for="f-sort">Sort</label><select id="f-sort" name="sort">{% for o in f.sorts %}<option value="{{ o.value }}" {% if o.selected %}selected{% endif %}>{{ o.label }}</option>{% endfor %}</select></div>
+    <noscript><button class="btn" type="submit">Apply filters</button></noscript>
+  </form>
+  <div id="results" class="results">
+    {% include "storefront/_results.html" %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Checkout · Adire House{% endblock %}
+{% block content %}
+<p class="crumbs"><a href="/artworks/{{ id }}">← Back to the artwork</a></p>
+<div class="cols">
+  <form class="panel form" method="post" action="/checkout/{{ id }}" hx-post="/checkout/{{ id }}">
+    <h1 class="h-page">Checkout</h1>
+    <p class="sub">Delivering to {{ region_label }}. Your payment is held by Adire House and only released to the vendor after you confirm the piece arrived.</p>
+    <label for="c-name">Full name<input id="c-name" name="name" type="text" autocomplete="name" required></label>
+    <label for="c-email">Email<input id="c-email" name="email" type="email" autocomplete="email" required></label>
+    <label for="c-address">Delivery address<textarea id="c-address" name="address" rows="4" autocomplete="street-address" required placeholder="Street, city, postcode, country"></textarea></label>
+    <button class="btn primary" type="submit">Pay {{ total }}</button>
+    <p class="fine">Development payments are simulated. Connect Stripe Connect or Paystack before taking real orders.</p>
+  </form>
+  <aside class="panel">
+    <div class="summary">
+      {% if let Some(img) = img %}<img class="thumb lg" src="{{ img }}" alt="">{% else %}<div class="thumb lg ph {{ ph }}" style="--h:{{ hue }}"></div>{% endif %}
+      <div><h2 class="h-sm">{{ title }}</h2><p class="muted">{{ artist }} · sold by {{ vendor }}</p><p class="muted">Arrives in {{ delivery }}</p></div>
+    </div>
+    <div class="price">
+      <div><span>Artwork</span><span>{{ price }}</span></div>
+      <div><span>Insured shipping</span><span>{{ shipping }}</span></div>
+      <div class="tot"><span>Total ({{ currency }})</span><span>{{ total }}</span></div>
+    </div>
+  </aside>
+</div>
+{% endblock %}

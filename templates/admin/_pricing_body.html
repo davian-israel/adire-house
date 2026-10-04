@@ -1,0 +1,12 @@
+<form class="panel form" hx-post="/admin/pricing" hx-target="#pricing" hx-swap="innerHTML">
+  <h2 class="h-sm">Pricing policy</h2>
+  <p class="sub">Applied to every vendor price automatically. Rates are in US dollars before currency conversion.</p>
+  <label for="s-markup">Markup on vendor price (%)<input id="s-markup" name="markup" type="number" min="0" max="300" step="0.1" value="{{ p.markup_pct }}"></label>
+  <div class="tbl-wrap"><table class="tbl rates">
+    <thead><tr><th>Shipping lane</th><th class="num">Small</th><th class="num">Medium</th><th class="num">Large</th></tr></thead>
+    <tbody>{% for r in p.rates %}<tr><td>{{ r.lane }}<br><span class="muted small">{{ r.delivery }}</span></td>{% for (name, val) in r.cells %}<td class="num"><input name="{{ name }}" type="number" min="0" step="0.01" value="{{ val }}" aria-label="{{ r.lane }} {{ name }}"></td>{% endfor %}</tr>{% endfor %}</tbody>
+  </table></div>
+  <div class="two three">{% for (code, rate) in p.fx %}<label>1 USD in {{ code }}<input name="fx_{{ code }}" type="number" min="0.01" step="0.0001" value="{{ rate }}"></label>{% endfor %}</div>
+  <p class="sub">Local stock: the piece is in the buyer's country. Regional: UK stock to the EU, or US and Canada to each other. Ships from Africa: everything else.</p>
+  <div class="actions"><button class="btn primary" type="submit">Save pricing</button>{% if p.saved %}<span class="badge ok">Saved. New prices are live.</span>{% endif %}</div>
+</form>

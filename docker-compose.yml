@@ -1,0 +1,25 @@
+services:
+  pocketbase:
+    build: ./pocketbase
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - pb_data:/pb/pb_data
+    # PocketBase's admin UI, bound to localhost only. Browsers never talk to PocketBase directly.
+    ports:
+      - "127.0.0.1:8090:8090"
+
+  app:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      PB_URL: http://pocketbase:8090
+      BIND: 0.0.0.0:3000
+    depends_on:
+      - pocketbase
+    ports:
+      - "3000:3000"
+
+volumes:
+  pb_data:

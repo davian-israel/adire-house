@@ -1,0 +1,19 @@
+<tr id="row-{{ r.id }}" {% if !r.listed %}class="dim"{% endif %}>
+  <td>{% if let Some(img) = r.img %}<img class="thumb" src="{{ img }}" alt="">{% else %}<div class="thumb ph {{ r.ph }}" style="--h:{{ r.hue }}"></div>{% endif %}</td>
+  <td class="work"><b>{{ r.title }}</b><br><span class="muted small">{{ r.artist }} · {{ r.dimensions }}</span>
+    {% if r.sold_out %}<br><span class="badge ok">Sold</span>{% else if !r.listed %}<br><span class="badge">Withdrawn</span>{% endif %}</td>
+  <td class="num">{{ r.you_get }}</td>
+  <td class="num small">{% for (code, total) in r.buyer_prices %}{{ code }} {{ total }}<br>{% endfor %}</td>
+  <td>
+    <form hx-post="/vendor/artworks/{{ r.id }}/stock" hx-trigger="change" hx-target="#row-{{ r.id }}" hx-swap="outerHTML">
+      <select name="location" aria-label="Where {{ r.title }} is now">{% for o in r.locations %}<option value="{{ o.value }}" {% if o.selected %}selected{% endif %}>{{ o.label }}</option>{% endfor %}</select>
+    </form>
+  </td>
+  <td>
+    {% if r.listed %}
+    <button class="btn small" hx-post="/vendor/artworks/{{ r.id }}/withdraw" hx-target="#row-{{ r.id }}" hx-swap="outerHTML">Withdraw</button>
+    {% else %}
+    <button class="btn small" hx-post="/vendor/artworks/{{ r.id }}/relist" hx-target="#row-{{ r.id }}" hx-swap="outerHTML">Relist</button>
+    {% endif %}
+  </td>
+</tr>

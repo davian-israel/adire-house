@@ -1,0 +1,5 @@
+<form class="fav" method="post" action="/favourites" hx-post="/favourites" hx-target="this" hx-swap="outerHTML">
+  <input type="hidden" name="kind" value="{{ fav.kind }}">
+  <input type="hidden" name="target" value="{{ fav.target }}">
+  <button class="btn small save" type="submit" aria-pressed="{{ fav.saved }}">{% if fav.saved %}{{ fav.label_on }}{% else %}{{ fav.label_off }}{% endif %}</button>
+</form>

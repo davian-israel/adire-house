@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}{{ d.title }} by {{ d.artist }} · Adire House{% endblock %}
+{% block content %}
+<p class="crumbs"><a href="/">← All artworks</a></p>
+<div class="panel page-detail">
+{% include "storefront/_detail_body.html" %}
+</div>
+{% endblock %}

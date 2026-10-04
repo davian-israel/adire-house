@@ -1,0 +1,27 @@
+<div class="detail">
+  <div class="art">
+    {% if let Some(img) = d.img %}<img src="{{ img }}" alt="{{ d.title }}">{% else %}<div class="ph big {{ d.ph }}" style="--h:{{ d.hue }}" role="img" aria-label="Photo coming soon"></div>{% endif %}
+  </div>
+  <div class="info">
+    <div class="badges"><span class="badge ok">✓ Verified {{ d.vendor_kind }}</span><span class="badge">Certificate of authenticity</span>{% if d.fast %}<span class="badge gold">{{ d.lane_label }}</span>{% endif %}</div>
+    <div><h2>{{ d.title }}</h2><p class="muted">{{ d.artist }}{% if !d.year.is_empty() %}, {{ d.year }}{% endif %}</p></div>
+    <dl class="dl">
+      <dt>Medium</dt><dd>{{ d.materials }}</dd>
+      <dt>Size</dt><dd>{{ d.dimensions }}</dd>
+      <dt>Sold by</dt><dd>{{ d.vendor_name }}, {{ d.vendor_city }}</dd>
+      <dt>Ships from</dt><dd>{{ d.ships_from }}</dd>
+      <dt>Delivery</dt><dd>{{ d.delivery }} to {{ d.region_label }}</dd>
+    </dl>
+    <div class="price">
+      <div><span>Artwork</span><span>{{ d.price }}</span></div>
+      <div><span>Insured shipping</span><span>{{ d.shipping }}</span></div>
+      <div class="tot"><span>Total</span><span>{{ d.total }}</span></div>
+      <span class="note">{{ d.duty_note }} Your payment is held until you confirm delivery.</span>
+    </div>
+    <div class="actions">
+      <a class="btn primary" href="/checkout/{{ d.id }}" hx-boost="false">Buy now</a>
+      {% let fav = d.fav_artist %}{% include "storefront/_fav.html" %}
+      {% let fav = d.fav_vendor %}{% include "storefront/_fav.html" %}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,5 @@
+<tr id="vendor-{{ v.id }}">
+  <td><b>{{ v.name }}</b></td><td>{{ v.kind }}</td><td>{{ v.place }}</td><td class="num">{{ v.works }}</td>
+  <td><span class="badge {{ v.tone }}">{{ v.status }}</span></td>
+  <td>{% if v.can_approve %}<button class="btn small primary" hx-post="/admin/vendors/{{ v.id }}/approve" hx-target="#vendor-{{ v.id }}" hx-swap="outerHTML">Approve</button>{% else %}<button class="btn small" hx-post="/admin/vendors/{{ v.id }}/suspend" hx-target="#vendor-{{ v.id }}" hx-swap="outerHTML">Suspend</button>{% endif %}</td>
+</tr>

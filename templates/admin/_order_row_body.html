@@ -1,0 +1,15 @@
+<tr id="order-{{ o.id }}">
+  <td><a class="mono" href="/orders/{{ o.id }}">{{ o.number }}</a><br><span class="muted small">{{ o.created }} · {{ o.buyer }}</span></td>
+  <td>{{ o.artwork }}{% if !o.tracking.is_empty() %}<br><span class="muted small mono">{{ o.tracking }}</span>{% endif %}</td>
+  <td>{{ o.destination }}</td>
+  <td class="num">{{ o.total }}</td><td class="num">{{ o.vendor_gets }}</td><td class="num">{{ o.margin }}</td>
+  <td><span class="badge {{ o.tone }}">{{ o.status }}</span></td>
+  <td>
+    {% if !o.actions.is_empty() %}
+    <form class="order-acts" hx-target="#order-{{ o.id }}" hx-swap="outerHTML">
+      {% if o.needs_tracking %}<input name="tracking" type="text" placeholder="Tracking no." aria-label="Tracking number for {{ o.number }}">{% endif %}
+      {% for (code, label) in o.actions %}<button class="btn small" type="button" hx-post="/admin/orders/{{ o.id }}/{{ code }}" hx-include="closest form">{{ label }}</button>{% endfor %}
+    </form>
+    {% endif %}
+  </td>
+</tr>

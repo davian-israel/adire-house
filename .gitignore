@@ -1,0 +1,4 @@
+/target
+.env
+pocketbase/pb_data
+pocketbase/pocketbase

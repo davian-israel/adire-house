@@ -1,0 +1,17 @@
+<section class="hero">
+  <div>
+    <h1>Original work from African studios, <em>delivered to your door</em></h1>
+    <p>Buy directly from verified artists and shops. Your payment is held until the piece arrives, and many works ship in days from our stock in the US, UK and Canada.</p>
+  </div>
+  <div class="assure">
+    <div><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l7 4v6c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6z"/></svg><p><b>Verified studios</b><span>We meet each artist and inspect work before it is listed.</span></p></div>
+    <div><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h18v12H3zM3 11h18M7 15h4"/></svg><p><b>Payment held until delivery</b><span>The artist is paid once you confirm the piece arrived as described.</span></p></div>
+    <div><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13h12V5H3zM15 9h4l2 3v1h-6"/><circle cx="7" cy="17" r="2"/><circle cx="18" cy="17" r="2"/></svg><p><b>Insured shipping</b><span>Tracked and insured from studio or local warehouse to your door.</span></p></div>
+  </div>
+</section>
+<nav class="tabs" aria-label="Browse">
+  <a href="/" {% if chrome.tab == "art" %}aria-current="page"{% endif %}>Artworks</a>
+  <a href="/shops" {% if chrome.tab == "shops" %}aria-current="page"{% endif %}>Shops &amp; galleries</a>
+  <a href="/artists" {% if chrome.tab == "artists" %}aria-current="page"{% endif %}>Artists</a>
+  <a href="/saved" {% if chrome.tab == "saved" %}aria-current="page"{% endif %}>Saved <span class="count" id="fav-count">{{ chrome.fav_count }}</span></a>
+</nav>

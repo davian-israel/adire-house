@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block title %}Artists · Adire House{% endblock %}
+{% block content %}
+{% include "storefront/_tabs.html" %}
+<div class="vgrid">{% for ac in artists %}{% include "storefront/_artist_card.html" %}{% endfor %}</div>
+{% endblock %}

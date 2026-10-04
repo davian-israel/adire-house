@@ -1,0 +1,13 @@
+<div class="bar"><span class="n">{{ cards.len() }} {% if cards.len() == 1 %}work{% else %}works{% endif %}</span>
+  <button class="btn small rail-toggle" type="button" data-toggle-rail>Filters</button>
+</div>
+{% if !chips.is_empty() %}
+<div class="bar chips">{% for c in chips %}<a class="chip" href="{{ c.href }}">{{ c.label }} <span aria-hidden="true">×</span><span class="sr">Remove filter</span></a>{% endfor %}<a class="btn small" href="/">Clear all</a></div>
+{% endif %}
+{% if cards.is_empty() %}
+<div class="empty">No works match these filters. Try removing one.</div>
+{% else %}
+<div class="grid">
+{% for c in cards %}{% include "storefront/_card.html" %}{% endfor %}
+</div>
+{% endif %}

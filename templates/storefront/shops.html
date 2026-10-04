@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block title %}Shops & galleries · Adire House{% endblock %}
+{% block content %}
+{% include "storefront/_tabs.html" %}
+<div class="vgrid">{% for vc in vendors %}{% include "storefront/_vendor_card.html" %}{% endfor %}</div>
+{% endblock %}

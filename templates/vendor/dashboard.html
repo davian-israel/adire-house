@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Vendor portal · Adire House{% endblock %}
+{% block content %}
+<section class="page-head">
+  <h1 class="h-page">{{ vendor_name }}</h1>
+  <p class="sub">Enter your price in US dollars. Adire House adds its {{ markup_pct }}% margin and the shipping cost for each buyer's country automatically. You receive your price in full on every sale.</p>
+  {% if verified %}<span class="badge ok">✓ Verified</span>{% else %}<span class="badge warn">{{ status_label }}: your works stay hidden from buyers until your studio is verified</span>{% endif %}
+</section>
+<div class="cols wide-right">
+  <form class="panel form" method="post" action="/vendor/artworks" enctype="multipart/form-data"
+        hx-post="/vendor/artworks" hx-encoding="multipart/form-data">
+    <h2 class="h-sm">Add an artwork</h2>
+    <label for="n-title">Title<input id="n-title" name="title" type="text" required maxlength="120" placeholder="e.g. Harmattan Morning"></label>
+    {% if is_shop %}<label for="n-artist">Artist<input id="n-artist" name="artist" type="text" required placeholder="Artist's full name"></label>{% endif %}
+    <div class="two">
+      <label for="n-medium">Medium<select id="n-medium" name="medium">{% for o in media %}<option value="{{ o.value }}" {% if o.selected %}selected{% endif %}>{{ o.label }}</option>{% endfor %}</select></label>
+      <label for="n-materials">Materials<input id="n-materials" name="materials" type="text" placeholder="Acrylic on canvas"></label>
+    </div>
+    <div class="two">
+      <label for="n-dims">Dimensions<input id="n-dims" name="dimensions" type="text" placeholder="60 × 80 cm"></label>
+      <label for="n-year">Year<input id="n-year" name="year" type="number" min="1900" max="2100" placeholder="2026"></label>
+    </div>
+    <div class="quote-inputs two" hx-post="/vendor/quote" hx-trigger="input delay:200ms, change" hx-target="#quote" hx-include="this" hx-encoding="application/x-www-form-urlencoded">
+      <label for="n-price">Your price (USD)<input id="n-price" name="price" type="number" min="1" step="1" value="300" required></label>
+      <label for="n-size">Shipping size<select id="n-size" name="size">{% for o in sizes %}<option value="{{ o.value }}" {% if o.selected %}selected{% endif %}>{{ o.label }}</option>{% endfor %}</select></label>
+      <label for="n-stock">Where the piece is now<select id="n-stock" name="stock">{% for o in locations %}<option value="{{ o.value }}" {% if o.selected %}selected{% endif %}>{{ o.label }}</option>{% endfor %}</select></label>
+    </div>
+    <label for="n-img">Photo<input id="n-img" name="image" type="file" accept="image/jpeg,image/png,image/webp"></label>
+    <div id="quote" class="calc">{% let q = preview %}{% include "vendor/_quote_body.html" %}</div>
+    <button class="btn primary" type="submit">Add to my listings</button>
+  </form>
+  <section class="panel">
+    <h2 class="h-sm">My listings</h2>
+    {% if rows.is_empty() %}
+    <div class="empty">No works yet. Add your first piece with the form.</div>
+    {% else %}
+    <div class="tbl-wrap"><table class="tbl">
+      <thead><tr><th></th><th>Work</th><th class="num">You get</th><th class="num">Buyer pays</th><th>Stock</th><th></th></tr></thead>
+      <tbody>{% for r in rows %}{% include "vendor/_row_body.html" %}{% endfor %}</tbody>
+    </table></div>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}

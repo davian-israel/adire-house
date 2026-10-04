@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{% block title %}Adire House · African art, direct from the studio{% endblock %}</title>
+<meta name="htmx-config" content='{"responseHandling":[{"code":"204","swap":false},{"code":"[23]..","swap":true},{"code":"422","swap":true,"error":false},{"code":"[45]..","swap":false,"error":true}]}'>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="/static/app.css">
+<script src="/static/htmx.min.js" defer></script>
+<script src="/static/app.js" defer></script>
+</head>
+<body hx-boost="true">
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="/"><span class="brand-mark" aria-hidden="true"></span><span><b>Adire House</b><small>African art, direct from the studio</small></span></a>
+    <nav class="staff">
+      {% if chrome.is_admin() %}<a href="/admin" {% if chrome.tab == "admin" %}aria-current="page"{% endif %}>Admin</a>{% endif %}
+      {% if chrome.is_vendor() %}<a href="/vendor" {% if chrome.tab == "vendor" %}aria-current="page"{% endif %}>Vendor portal</a>{% endif %}
+      {% if chrome.session.is_some() %}
+        <form method="post" action="/logout"><button class="linkish" type="submit">Sign out {{ chrome.user_name() }}</button></form>
+      {% else %}
+        <a href="/login">Artist &amp; shop sign in</a>
+      {% endif %}
+    </nav>
+    <form class="region" method="post" action="/region" hx-post="/region" hx-trigger="change">
+      <label for="region">Deliver to</label>
+      <select id="region" name="region">
+        {% for o in chrome.regions %}<option value="{{ o.value }}" {% if o.selected %}selected{% endif %}>{{ o.label }}</option>{% endfor %}
+      </select>
+      <noscript><button class="btn small" type="submit">Update</button></noscript>
+    </form>
+  </div>
+</header>
+<div id="flash" class="wrap" aria-live="polite"></div>
+<main class="wrap">
+{% block content %}{% endblock %}
+</main>
+<footer class="wrap foot">
+  <p>Every artist and shop is visited and verified by our team in Africa. Payments are held until you confirm delivery.</p>
+</footer>
+<div id="modal"></div>
+</body>
+</html>

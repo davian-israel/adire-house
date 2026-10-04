@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Order {{ number }} · Adire House{% endblock %}
+{% block content %}
+<div class="panel narrow">
+  <p class="eyebrow">Order {{ number }}</p>
+  <h1 class="h-page">{{ title }}</h1>
+  <p><span class="badge {{ tone }}">{{ status }}</span> <span class="mono">{{ total }}</span></p>
+  {% if !closed %}
+  <ol class="steps">
+    {% for s in steps %}<li {% if s.done %}class="done"{% endif %}>{{ s.label }}</li>{% endfor %}
+  </ol>
+  {% endif %}
+  {% if !tracking.is_empty() %}<p>Courier tracking: <span class="mono">{{ tracking }}</span></p>{% endif %}
+  {% if can_confirm %}
+  <form method="post" action="/orders/{{ id }}/confirm-delivery" hx-post="/orders/{{ id }}/confirm-delivery">
+    <p class="sub">Only confirm once the piece has arrived and matches the listing. This releases payment to the vendor.</p>
+    <button class="btn primary" type="submit">The piece arrived as described</button>
+  </form>
+  {% endif %}
+  <p class="fine">Keep this page's link to check on your order.</p>
+</div>
+{% endblock %}

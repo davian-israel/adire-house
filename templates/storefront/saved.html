@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Saved · Adire House{% endblock %}
+{% block content %}
+{% include "storefront/_tabs.html" %}
+{% if vendors.is_empty() && artists.is_empty() %}
+<div class="empty">Save a shop or an artist and their new work will collect here.</div>
+{% else %}
+<div class="stack">
+  {% if !vendors.is_empty() %}<section><h2 class="section-h">Saved shops</h2><div class="vgrid">{% for vc in vendors %}{% include "storefront/_vendor_card.html" %}{% endfor %}</div></section>{% endif %}
+  {% if !artists.is_empty() %}<section><h2 class="section-h">Saved artists</h2><div class="vgrid">{% for ac in artists %}{% include "storefront/_artist_card.html" %}{% endfor %}</div></section>{% endif %}
+  <section><h2 class="section-h">Latest from what you follow</h2><div class="grid">{% for c in cards %}{% include "storefront/_card.html" %}{% endfor %}</div></section>
+</div>
+{% endif %}
+{% endblock %}

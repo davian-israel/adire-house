@@ -1,0 +1,8 @@
+<article class="vcard">
+  <div class="strip">{% for t in ac.thumbs %}{% if let Some(img) = t.img %}<img src="{{ img }}" alt="">{% else %}<div class="ph {{ t.ph }}" style="--h:{{ t.hue }}"></div>{% endif %}{% endfor %}</div>
+  <div class="body">
+    <h3>{{ ac.name }}</h3>
+    <div class="row">{{ ac.country }} · {{ ac.works }} works · via {{ ac.via }}</div>
+    <div class="actions"><a class="btn small primary" href="{{ ac.href }}">View works</a>{% let fav = ac.fav %}{% include "storefront/_fav.html" %}</div>
+  </div>
+</article>

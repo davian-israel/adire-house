@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Admin · Adire House{% endblock %}
+{% block content %}
+<section class="page-head">
+  <h1 class="h-page">Admin</h1>
+  <p class="sub">Onboard studios, approve vendors, set the margin and shipping table, and move orders through escrow.</p>
+</section>
+<div class="stats">
+  <div class="stat"><b>{{ verified }}</b><span>Verified vendors</span></div>
+  <div class="stat"><b>{{ pending }}</b><span>Awaiting studio visit</span></div>
+  <div class="stat"><b>{{ live_works }}</b><span>Live artworks</span></div>
+  <div class="stat"><b>{{ held }}</b><span>Buyer funds in escrow</span></div>
+  <div class="stat"><b>{{ margin }}</b><span>Margin earned on completed orders</span></div>
+</div>
+<div class="cols wide-left">
+  <div class="stack">
+    <section class="panel">
+      <h2 class="h-sm">Vendors</h2>
+      <p class="sub">Only verified vendors appear in the shop.</p>
+      <div class="tbl-wrap"><table class="tbl">
+        <thead><tr><th>Name</th><th>Type</th><th>Location</th><th class="num">Works</th><th>Status</th><th></th></tr></thead>
+        <tbody>{% for v in vendors %}{% include "admin/_vendor_row_body.html" %}{% endfor %}</tbody>
+      </table></div>
+    </section>
+    <section class="panel">
+      <h2 class="h-sm">Orders</h2>
+      <p class="sub">Funds are released to the vendor only when the buyer confirms delivery (or you confirm it for them).</p>
+      {% if orders.is_empty() %}<div class="empty">No orders yet.</div>{% else %}
+      <div class="tbl-wrap"><table class="tbl">
+        <thead><tr><th>Order</th><th>Work</th><th>To</th><th class="num">Buyer paid</th><th class="num">Vendor gets</th><th class="num">Margin</th><th>Status</th><th></th></tr></thead>
+        <tbody>{% for o in orders %}{% include "admin/_order_row_body.html" %}{% endfor %}</tbody>
+      </table></div>{% endif %}
+    </section>
+  </div>
+  <div class="stack">
+    <form class="panel form" method="post" action="/admin/vendors" hx-post="/admin/vendors">
+      <h2 class="h-sm">Sign up a vendor</h2>
+      <p class="sub">New vendors start as pending until their studio visit is complete.</p>
+      <label for="o-name">Name<input id="o-name" name="name" type="text" required placeholder="Studio or artist name"></label>
+      <div class="two">
+        <label for="o-kind">Type<select id="o-kind" name="kind"><option value="artist">Individual artist</option><option value="shop">Shop or gallery</option></select></label>
+        <label for="o-country">Country<input id="o-country" name="country" type="text" required placeholder="Ghana"></label>
+      </div>
+      <label for="o-city">City<input id="o-city" name="city" type="text" required placeholder="Kumasi"></label>
+      <label for="o-bio">Short bio<textarea id="o-bio" name="bio" rows="2" placeholder="What they make and how"></textarea></label>
+      <fieldset class="two"><legend>Portal login (optional)</legend>
+        <label for="o-email">Email<input id="o-email" name="login_email" type="email" autocomplete="off"></label>
+        <label for="o-pass">Temporary password<input id="o-pass" name="login_password" type="text" autocomplete="off" minlength="10"></label>
+      </fieldset>
+      <button class="btn primary" type="submit">Add vendor</button>
+    </form>
+    <div id="pricing">{% let p = pricing %}{% include "admin/_pricing_body.html" %}</div>
+  </div>
+</div>
+{% endblock %}

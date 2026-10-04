@@ -1,0 +1,11 @@
+<a class="card" href="/artworks/{{ c.id }}" hx-get="/artworks/{{ c.id }}" hx-target="#modal" hx-swap="innerHTML" hx-push-url="false">
+  <div class="frame">
+    {% if let Some(img) = c.img %}<img src="{{ img }}" alt="" loading="lazy">{% else %}<div class="ph {{ c.ph }}" style="--h:{{ c.hue }}" role="img" aria-label="Photo coming soon"></div>{% endif %}
+    {% if let Some(d) = c.fast %}<span class="tag">Arrives in {{ d }}</span>{% endif %}
+  </div>
+  <div class="meta">
+    <span class="t">{{ c.title }}</span>
+    <span class="a">{{ c.artist }} · {{ c.country }}</span>
+    <span class="p">{{ c.price }} <small>+ {{ c.shipping }} shipping</small></span>
+  </div>
+</a>

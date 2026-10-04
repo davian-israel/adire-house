@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Sign in · Adire House{% endblock %}
+{% block content %}
+<form class="panel form narrow" method="post" action="/login" hx-post="/login">
+  <h1 class="h-page">Artist &amp; shop sign in</h1>
+  <p class="sub">For verified vendors and the Adire House team. Buyers don't need an account.</p>
+  <label for="l-email">Email<input id="l-email" name="email" type="email" autocomplete="username" required></label>
+  <label for="l-pass">Password<input id="l-pass" name="password" type="password" autocomplete="current-password" required></label>
+  <button class="btn primary" type="submit">Sign in</button>
+</form>
+{% endblock %}
